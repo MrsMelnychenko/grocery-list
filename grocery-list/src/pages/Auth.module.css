@@ -1,0 +1,68 @@
+
+.menu {
+    max-width: 60%;
+    margin: auto;
+    
+}
+.title {
+    font-size: 4rem;
+    font-family: 'Cookie', cursive;
+    color:#FAF6DD;
+    text-shadow: 4px 3px black;
+    margin-bottom: 1rem;
+}
+.img {
+    max-height: 18rem;
+    border-radius: 10px;
+    padding-bottom: 1rem;
+}
+
+.card {
+    background-color: #FAF6DD;
+    border-radius: 5px;
+    font-family: 'Acme', sans-serif;
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;  
+}
+
+.inputForm {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 100%;
+    height: 1.5rem;
+}
+.p {
+   margin-top: 0;
+   margin-bottom: 0;
+}
+
+.buttonForm {
+display: flex;
+    justify-content: center;
+    padding-top: 0.5rem;
+}   
+
+.btnLogIn {
+    width: 100%;
+    border-radius: 5px;
+    background-color: #80CB95;
+    font-family: 'Cookie', cursive;
+    font-size: 1.5rem;
+}
+.btnLogInG {
+    background-color: #FAF6DD;
+}
+.centered {
+    text-align: center;
+}
+.createAcc {
+    text-decoration: underline;
+    font-weight: bold;
+    text-align: center;
+}

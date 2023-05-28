@@ -1,0 +1,40 @@
+.card {
+border: 1px solid #F46D6D;
+border-radius: 5px;
+background-color: #FFFFFF;
+/* display: flex; */
+flex-direction: column;
+margin: auto;
+width: 70%;
+}
+.card > * {
+    font-family: 'Acme', sans-serif;
+    text-align: center;
+    display: flex;
+}
+.close{
+ justify-content: end;
+ align-items: end;   
+}
+.text {
+font-size: 1.2rem;
+}
+.btns{
+justify-content: space-around;
+height: 2rem;
+padding-bottom: 0.5rem;
+}
+.btns > * {
+    width: 40%;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.delete {
+background-color: #F46D6D;
+font-family: 'Acme', sans-serif;
+}
+.cancel{
+background-color: #80CB95;
+font-family: 'Acme', sans-serif;
+}
