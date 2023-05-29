@@ -1,0 +1,13 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #EFE4CE;
+    width: 100%;
+}
+.title {
+    font-family: 'Cookie', cursive;
+        font-size: 2.5rem;
+        margin-top: 0;
+        margin-bottom: 0;
+}

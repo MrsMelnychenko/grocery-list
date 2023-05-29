@@ -2,6 +2,7 @@ import React from "react";
 import Auth from "./pages/Auth.js";
 import SignIn from "./pages/SignIn.js";
 import PopUp from "./components/PopUp.js";
+import Header from "./components/Header.js";
 import { useState } from "react";
 
 // import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -28,8 +29,9 @@ export default function App() {
   }
   return (
     <>
-      <PopUp item={"Tomato"} />
-      {/* {authPage} */}
+      {/* <PopUp item={"Tomato"} /> */}
+      {/* <Header isMainPage={true} /> */}
+      {authPage}
     </>
   );
   // </ThemeProvider>
