@@ -5,41 +5,35 @@ import { useState } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { Link } from "react-router-dom";
 // import { getDatabase } from "firebase/database";
 
-export default function Auth(props) {
-  const [enteredUsername, setEnteredUserName] = useState("");
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [enteredPasswd, setEnteredPasswd] = useState("");
-  const [repeatedPasswd, setRepeatedPasswd] = useState("");
+const SignIn = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    passwdRepeat: ""
+  });
 
-  //   const db = getDatabase();
+  const inputChangeHandler = (event) => {
+    const { id, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [id]: value
+    }));
+  };
 
-  const userNameChangeHandler = (event) => {
-    setEnteredUserName(event.target.value);
-  };
-  const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
-  };
-  const passwdChangeHandler = (event) => {
-    setEnteredPasswd(event.target.value);
-  };
-  const repeatPasswdChangeHandler = (event) => {
-    setRepeatedPasswd(event.target.value);
-  };
+
   const createAcc = (event) => {
     event.preventDefault();
     firebase
       .auth()
-      .createUserWithEmailAndPassword(enteredEmail, enteredPasswd)
+      .createUserWithEmailAndPassword(formData.email, formData.password)
       .then((response) => {
         console.log("acc was created!");
-        alert("Your account was created!");
       })
       .catch((error) => console.log(error));
-  };
-  const goToLogIn = () => {
-    props.checkAccExist(true);
   };
   return (
     <>
@@ -47,50 +41,46 @@ export default function Auth(props) {
       <div className={styles.menu}>
         <img className={styles.img} src={authMainPhoto} alt="Auth Main" />
         <div className={styles.inputContainer}>
-          <form>
+          <form onSubmit={createAcc}>
             <div className={styles.card}>
               <div>
-                <p className={styles.p}>Username:</p>
-                <label htmlFor="username" />
+                  <label htmlFor="username" className={styles.p}>Username:</label>
                 <input
                   type="text"
                   id="username"
-                  value={enteredUsername}
+                  value={formData.username}
                   className={styles.inputForm}
                   placeholder="Enter your Username"
-                  onChange={userNameChangeHandler}
+                  onChange={inputChangeHandler}
                 />
-                <p className={styles.p}>Email:</p>
-                <label htmlFor="enail" />
+                 <label htmlFor="email" className={styles.p}>Email:</label>
                 <input
                   type="email"
                   id="email"
-                  value={enteredEmail}
+                  value={formData.email}
                   className={styles.inputForm}
                   placeholder="Enter your Email"
-                  onChange={emailChangeHandler}
+                  onChange={inputChangeHandler}
                 />
-                <p className={styles.p}>Password:</p>
-                <label htmlFor="passwd" />
+                 <label htmlFor="password" className={styles.p}>Password:</label>
                 <input
                   type="password"
-                  id="passwd"
-                  value={enteredPasswd}
+                  id="password"
+                  value={formData.password}
                   className={styles.inputForm}
                   placeholder="Enter your password"
                   autoComplete="on"
-                  onChange={passwdChangeHandler}
+                  onChange={inputChangeHandler}
                 />
-                <p className={styles.p}>Confirm your password:</p>
-                <label htmlFor="passwdRepeat" />
+                <label htmlFor="passwdRepeat" className={styles.p}>Repeat your password:</label>
                 <input
                   type="password"
                   id="passwdRepeat"
-                  value={repeatedPasswd}
+                  value={formData.passwdReapet}
                   className={styles.inputForm}
                   placeholder="Repeat your password"
                   autoComplete="on"
-                  onChange={repeatPasswdChangeHandler}
+                  onChange={inputChangeHandler}
                 />
               </div>
               <div className={styles.buttonForm}>
@@ -99,8 +89,8 @@ export default function Auth(props) {
                 </button>
               </div>
               <p className={styles.p}>Already have an account?</p>
-              <p className={styles.createAcc} onClick={goToLogIn}>
-                Log In
+              <p className={styles.createAcc}>
+                <Link to="/">Log In</Link>
               </p>
             </div>
           </form>
@@ -108,4 +98,5 @@ export default function Auth(props) {
       </div>
     </>
   );
-}
+};
+export default SignIn;
