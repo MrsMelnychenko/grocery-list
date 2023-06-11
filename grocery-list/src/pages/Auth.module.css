@@ -28,12 +28,6 @@
   width: 100%;
 }
 
-.inputForm {
-  border: 1px solid black;
-  border-radius: 5px;
-  width: 100%;
-  height: 1.5rem;
-}
 .p {
   margin-top: 0;
   margin-bottom: 0;
@@ -43,17 +37,6 @@
   display: flex;
   justify-content: center;
   padding-top: 0.5rem;
-}
-
-.btnLogIn {
-  width: 100%;
-  border-radius: 5px;
-  background-color: #80cb95;
-  font-family: "Cookie", cursive;
-  font-size: 1.5rem;
-}
-.btnLogInG {
-  background-color: #faf6dd;
 }
 .centered {
   text-align: center;

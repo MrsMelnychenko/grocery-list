@@ -1,6 +1,5 @@
 import React from "react";
 import ListTile from "../components/ListTile";
-
 import Header from "../components/Header";
 
 const Home = () => {
@@ -14,7 +13,7 @@ const Home = () => {
     <>
       <Header isMainPage={true} />
       {DB_LISTS_TEST.map((el) => {
-        return <ListTile title={el.title} />;
+        return <ListTile key={el.id} title={el.title} />;
       })}
     </>
   );

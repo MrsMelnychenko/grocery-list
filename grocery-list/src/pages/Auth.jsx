@@ -1,17 +1,16 @@
 import React from "react";
-import authMainPhoto from "../img/authMainPhoto.jpg";
+import authMainPhoto from "../assets/authMainPhoto.jpg";
 import styles from "./Auth.module.css";
+import Input from "../components/Input";
+import BigButton from "../components/BigButton";
 import { useState } from "react";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 // import { getDatabase } from "firebase/database";
 
 const Auth = () => {
   //   const db = getDatabase();
-
-    const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
@@ -20,7 +19,7 @@ const Auth = () => {
     const { id, value } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [id]: value
+      [id]: value,
     }));
   };
 
@@ -28,12 +27,11 @@ const Auth = () => {
 
   const submitAuth = (event) => {
     event.preventDefault();
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(formData.email, formData.password)
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((response) => {
         console.log("Login successful");
-         navigate("main");
+        navigate("main");
       })
       .catch((error) => console.log(error));
   };
@@ -45,28 +43,33 @@ const Auth = () => {
         <div className={styles.inputContainer}>
           <form onSubmit={submitAuth}>
             <div className={styles.card}>
-              <label htmlFor="email" className={styles.p}>Email:</label>
-              <input
+              <label htmlFor="email" className={styles.p}>
+                Email:
+              </label>
+              <Input
                 type="email"
                 id="email"
                 value={formData.email}
-                className={styles.inputForm}
                 placeholder="Enter your Username"
                 onChange={inputChangeHandler}
               />
-              <label htmlFor="password" className={styles.p}>Password:</label>
-              <input
+              <label htmlFor="password" className={styles.p}>
+                Password:
+              </label>
+              <Input
                 type="password"
                 id="password"
                 value={formData.password}
-                className={styles.inputForm}
                 placeholder="Enter your password"
                 onChange={inputChangeHandler}
               />
               <div className={styles.buttonForm}>
-                <button className={styles.btnLogIn} onClick={submitAuth}>
+                <BigButton
+                  googlebtn={"false"}
+                  disabled={formData.email === "" && formData.password === ""}
+                >
                   Log In
-                </button>
+                </BigButton>
               </div>
               <p className={styles.createAcc}>
                 <Link to="sign">Create an account</Link>
@@ -75,9 +78,7 @@ const Auth = () => {
             <h3 className={styles.centered}>or</h3>
 
             <div>
-              <button className={`${styles.btnLogIn} ${styles.btnLogInG}`}>
-                Log In with Google
-              </button>
+              <BigButton googlebtn={"true"}>Log In with Google</BigButton>
             </div>
           </form>
         </div>
