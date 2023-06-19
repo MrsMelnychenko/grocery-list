@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import AddIcon from "@mui/icons-material/Add";
@@ -13,8 +13,10 @@ import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const Header = ({ isMainPage }) => {
+  const [cookies] = useCookies(["userEmail"]);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -25,6 +27,7 @@ const Header = ({ isMainPage }) => {
 
   const signUserOut = () => {
     const auth = getAuth();
+
     signOut(auth)
       .then(() => {
         console.log("sign out was succesful");
@@ -46,7 +49,7 @@ const Header = ({ isMainPage }) => {
       <List>
         <ListItem key={"Email"} disablePadding>
           <ListItemButton>
-            <ListItemText primary={"Email from Cntx"} />
+            <ListItemText primary={cookies.userEmail} />
           </ListItemButton>
         </ListItem>
         <ListItem onClick={signUserOut} key={"Log Out"} disablePadding>
@@ -64,16 +67,20 @@ const Header = ({ isMainPage }) => {
       {isMainPage ? (
         <MenuIcon onClick={handleDrawerToggle} />
       ) : (
-        <ArrowBackIosIcon />
+        <ArrowBackIosIcon onClick={() => navigate("/main")} />
       )}
       <p className={styles.title}>Grocery lists</p>
-      {isMainPage && <AddIcon onClick={goToAddProduct} />}
+      {isMainPage ? (
+        <AddIcon onClick={goToAddProduct} />
+      ) : (
+        <AddIcon sx={{ visibility: "hidden" }} />
+      )}
       <Drawer
         variant="temporary"
         open={drawerOpen}
         onClose={handleDrawerToggle}
         ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
+          keepMounted: true,
         }}
         sx={{
           display: { xs: "block", sm: "none" },

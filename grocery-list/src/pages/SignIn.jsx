@@ -161,9 +161,7 @@ const SignIn = () => {
                 <p className={styles.errorMessage}>Passwords do not match</p>
               )}
               <div className={styles.buttonForm}>
-                <BigButton className={styles.btnLogIn} disabled={!formIsValid}>
-                  Create an account
-                </BigButton>
+                <BigButton disabled={!formIsValid}>Create an account</BigButton>
               </div>
               <p className={styles.p}>Already have an account?</p>
               <p className={styles.createAcc}>

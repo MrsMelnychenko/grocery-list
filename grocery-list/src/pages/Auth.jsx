@@ -2,14 +2,14 @@ import React from "react";
 import authMainPhoto from "../assets/authMainPhoto.jpg";
 import styles from "./Auth.module.css";
 import Input from "../components/Input";
-import BigButton from "../components/BigButton";
+import BigButton, { BigButtonGoogle } from "../components/BigButton";
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
-// import { getDatabase } from "firebase/database";
+import { useCookies } from "react-cookie";
 
-const Auth = () => {
-  //   const db = getDatabase();
+const Auth = ({ loginStatus, user }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,7 +30,16 @@ const Auth = () => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((response) => {
-        console.log("Login successful");
+        const currentUserEmail = auth.currentUser.email;
+
+        const maxAge = 86400;
+        setCookie("userEmail", currentUserEmail, {
+          path: "/",
+          maxAge: maxAge,
+        });
+        loginStatus(true);
+        user(cookies.userEmail);
+
         navigate("main");
       })
       .catch((error) => console.log(error));
@@ -50,7 +59,7 @@ const Auth = () => {
                 type="email"
                 id="email"
                 value={formData.email}
-                placeholder="Enter your Username"
+                placeholder="Enter your email"
                 onChange={inputChangeHandler}
               />
               <label htmlFor="password" className={styles.p}>
@@ -60,16 +69,12 @@ const Auth = () => {
                 type="password"
                 id="password"
                 value={formData.password}
+                autoComplete="current-password"
                 placeholder="Enter your password"
                 onChange={inputChangeHandler}
               />
               <div className={styles.buttonForm}>
-                <BigButton
-                  googlebtn={"false"}
-                  disabled={formData.email === "" && formData.password === ""}
-                >
-                  Log In
-                </BigButton>
+                <BigButton>Log In</BigButton>
               </div>
               <p className={styles.createAcc}>
                 <Link to="sign">Create an account</Link>
@@ -78,7 +83,7 @@ const Auth = () => {
             <h3 className={styles.centered}>or</h3>
 
             <div>
-              <BigButton googlebtn={"true"}>Log In with Google</BigButton>
+              <BigButtonGoogle>Log In with Google</BigButtonGoogle>
             </div>
           </form>
         </div>
